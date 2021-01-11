@@ -1,0 +1,114 @@
+<div class="main-container" (click)="hideSuggestion()">
+    <div class="first-column">
+      <div *ngIf="film" class="film-info">
+          <div class="film-info-container">
+            <div class="film-info-content">
+              <div class="film-info-text" *ngIf="showFilm === true">
+                <span class="film-title">
+                    {{film.title}}
+                </span>
+                <span class="film-budget-runtime">
+                  <span>$ {{film.budget}}</span>
+                  <span>{{film.runtime}} min</span>
+                </span>
+                <div class="film-overview-arrow">
+                    <span class="film-overview">
+                        {{film.overview}}
+                    </span>
+                </div>
+                <div class="film-arrow-right" (click)="showCastInfo()">
+                    <i class="fas fa-angle-right"></i>
+                </div>
+              </div>
+              <div class="film-info-text" *ngIf="showCast === true">
+                <span class="film-title">
+                  {{film.title}}
+                </span>
+                <span class="film-cast-title">
+                  CAST
+                </span>
+                <div class="film-cast-container">
+                    <div class="film-arrow-left-cast" (click)="showOverview()">
+                        <i class="fas fa-angle-left"></i>
+                      </div>
+                      <div class="cast-info">
+                        <div class="film-cast-character" *ngFor="let char of film.cast"> 
+                          <span>{{char.character}}</span>
+                          <span class="char-name">{{char.name}}</span>
+                        </div>
+                    </div>
+                  <div class="film-arrow-right-cast" (click)="showCrewInfo()">
+                      <i class="fas fa-angle-right"></i>
+                    </div>
+                </div>
+              </div>
+              <div class="film-info-text" *ngIf="showCrew === true">
+                <span class="film-title">
+                  {{film.title}}
+                </span>
+                <span class="film-cast-title">
+                  CREW
+                </span>
+                <div class="film-arrow-left-cast" (click)="showCastInfo()">
+                    <i class="fas fa-angle-left"></i>
+                  </div>
+                <div class="film-crew-container">
+                  <div class="cast-info">
+                    <div class="film-cast-character" *ngFor="let job of film.crew">
+                      <span >{{job.job}}</span>
+                      <span class="crew-name">{{job.name}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="second-column">
+      <div class="second-column-container">
+        <div class="similar-btn">
+            <div id="wrapper">
+                <a href="#" class="my-super-cool-btn" (click)="showSimilar(film.title)">
+                  <div class="dots-container">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                  </div>
+                  <span class="get-similar">GET<br>SIMILAR!</span>
+                </a>
+              </div>
+        </div>
+        <div class="app-title">
+            <h1 class="glitch" data-glitch="RUMMAGE">RUMMAGE</h1>
+        </div>
+          <div class="container">
+            <input type="text" #searchInput placeholder="Search film..." (input)="getFilms(searchInput.value)">
+            <div class="search"></div>
+          <div class="suggestion-container">
+          <div *ngIf="showSuggestion === true && data" class="suggestion">
+              <mat-card *ngIf="data.length === 0" class="mat-card-suggestion">
+                Not Found...
+              </mat-card>
+              <mat-card *ngIf="data.length !== 0" class="mat-card-suggestion">
+                <div *ngFor="let currentFilm of data" class="film-container" (click)="fetchOneFilm(currentFilm.id)">
+                  <span>{{currentFilm.title}}</span>
+                  <mat-divider></mat-divider>
+                </div>
+              </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div *ngIf="showSimilarContainer === true && similarFilms" class="similar">
+      <div class="similar-container">
+          <div *ngFor="let suggestFilm of similarFilms" class="similar-film similar-films" (click)="fetchOneFilm(suggestFilm.id)">
+              <span class="similar-film-title">{{suggestFilm.title}}</span>
+           </div>
+      </div>
+    </div>
+  </div>
+  
+  
